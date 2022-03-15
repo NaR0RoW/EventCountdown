@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D4FEFD527E121CE00BC5BA4 /* EventsApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FEFD327E121CE00BC5BA4 /* EventsApp.xcdatamodeld */; };
+		0D4FEFD727E1226E00BC5BA4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FEFD627E1226E00BC5BA4 /* CoreDataManager.swift */; };
+		0D4FEFDA27E1274500BC5BA4 /* EventListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FEFD927E1274500BC5BA4 /* EventListViewModel.swift */; };
+		0D4FEFDD27E1284700BC5BA4 /* AddEventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FEFDC27E1284700BC5BA4 /* AddEventCoordinator.swift */; };
+		0D4FEFDF27E1299F00BC5BA4 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FEFDE27E1299F00BC5BA4 /* AddEventViewController.swift */; };
+		0D4FEFE127E12AE000BC5BA4 /* AddEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FEFE027E12AE000BC5BA4 /* AddEventViewModel.swift */; };
 		0D62231827E0CEE800EE4C36 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D62231727E0CEE800EE4C36 /* AppDelegate.swift */; };
 		0D62232127E0CEE800EE4C36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D62232027E0CEE800EE4C36 /* Assets.xcassets */; };
 		0D62232427E0CEE800EE4C36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D62232227E0CEE800EE4C36 /* LaunchScreen.storyboard */; };
@@ -17,6 +23,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D4FEFD427E121CE00BC5BA4 /* EventsApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EventsApp.xcdatamodel; sourceTree = "<group>"; };
+		0D4FEFD627E1226E00BC5BA4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		0D4FEFD927E1274500BC5BA4 /* EventListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListViewModel.swift; sourceTree = "<group>"; };
+		0D4FEFDC27E1284700BC5BA4 /* AddEventCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventCoordinator.swift; sourceTree = "<group>"; };
+		0D4FEFDE27E1299F00BC5BA4 /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
+		0D4FEFE027E12AE000BC5BA4 /* AddEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewModel.swift; sourceTree = "<group>"; };
 		0D62231427E0CEE800EE4C36 /* EventCountdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventCountdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D62231727E0CEE800EE4C36 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D62232027E0CEE800EE4C36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -39,6 +51,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D4FEFD227E121B500BC5BA4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0D4FEFD327E121CE00BC5BA4 /* EventsApp.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0D4FEFD827E1227100BC5BA4 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				0D4FEFD627E1226E00BC5BA4 /* CoreDataManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		0D4FEFDB27E1275B00BC5BA4 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				0D4FEFD927E1274500BC5BA4 /* EventListViewModel.swift */,
+				0D4FEFE027E12AE000BC5BA4 /* AddEventViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		0D62230B27E0CEE800EE4C36 = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +100,9 @@
 				0D62233527E0D52D00EE4C36 /* UI+Extensions */,
 				0D62233727E0D54100EE4C36 /* Coordinators */,
 				0D62233627E0D53900EE4C36 /* Controllers */,
+				0D4FEFD227E121B500BC5BA4 /* Model */,
+				0D4FEFD827E1227100BC5BA4 /* Managers */,
+				0D4FEFDB27E1275B00BC5BA4 /* ViewModels */,
 			);
 			path = EventCountdown;
 			sourceTree = "<group>";
@@ -79,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				0D62233127E0D16000EE4C36 /* EventListViewController.swift */,
+				0D4FEFDE27E1299F00BC5BA4 /* AddEventViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -88,6 +129,7 @@
 			children = (
 				0D62232B27E0CF8000EE4C36 /* AppCoordinator.swift */,
 				0D62232D27E0D0D500EE4C36 /* EventListCoordinator.swift */,
+				0D4FEFDC27E1284700BC5BA4 /* AddEventCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -181,9 +223,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D62232C27E0CF8000EE4C36 /* AppCoordinator.swift in Sources */,
+				0D4FEFDF27E1299F00BC5BA4 /* AddEventViewController.swift in Sources */,
+				0D4FEFE127E12AE000BC5BA4 /* AddEventViewModel.swift in Sources */,
 				0D62233227E0D16000EE4C36 /* EventListViewController.swift in Sources */,
+				0D4FEFDD27E1284700BC5BA4 /* AddEventCoordinator.swift in Sources */,
 				0D62231827E0CEE800EE4C36 /* AppDelegate.swift in Sources */,
 				0D62233427E0D3C600EE4C36 /* UIColor+Extensions.swift in Sources */,
+				0D4FEFD527E121CE00BC5BA4 /* EventsApp.xcdatamodeld in Sources */,
+				0D4FEFDA27E1274500BC5BA4 /* EventListViewModel.swift in Sources */,
+				0D4FEFD727E1226E00BC5BA4 /* CoreDataManager.swift in Sources */,
 				0D62232E27E0D0D500EE4C36 /* EventListCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,6 +442,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0D4FEFD327E121CE00BC5BA4 /* EventsApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0D4FEFD427E121CE00BC5BA4 /* EventsApp.xcdatamodel */,
+			);
+			currentVersion = 0D4FEFD427E121CE00BC5BA4 /* EventsApp.xcdatamodel */;
+			path = EventsApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0D62230C27E0CEE800EE4C36 /* Project object */;
 }
