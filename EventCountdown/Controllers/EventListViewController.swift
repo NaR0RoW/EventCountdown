@@ -1,7 +1,6 @@
 import UIKit
 
 final class EventListViewController: UIViewController {
-    
     var viewModel: EventListViewModel!
     
     private let coreDataManager = CoreDataManager()
