@@ -6,6 +6,7 @@ final class AddEventViewController: UIViewController {
     lazy var addEventTableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(TitleSubtitleCell.self, forCellReuseIdentifier: "TitleSubtitleCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -15,7 +16,7 @@ final class AddEventViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGreen
-        
+        configureView()
         configureAddEventTableView()
         
         viewModel.onUpdate = { [weak self] in
@@ -23,8 +24,6 @@ final class AddEventViewController: UIViewController {
         }
         
         viewModel.viewDidLoad()
-        
-        configureView()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -77,6 +76,13 @@ extension AddEventViewController: UITableViewDataSource {
             
             return cell
         }
+    }
+}
+
+extension AddEventViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

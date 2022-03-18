@@ -25,7 +25,7 @@ final class CoreDataManager {
         do {
             try managedObjectContext.save()
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
     }
     
