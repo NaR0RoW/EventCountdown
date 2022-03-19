@@ -5,13 +5,14 @@ final class TitleSubtitleCellViewModel {
     private(set) var subtitle: String
     let placeholder: String
     let type: CellType
+    private(set) var onCellUpdate: (() -> Void)?
+    
     lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         
         return dateFormatter
     }()
-    private(set) var onCellUpdate: (() -> Void)?
     private(set) var image: UIImage?
     
     enum CellType {
