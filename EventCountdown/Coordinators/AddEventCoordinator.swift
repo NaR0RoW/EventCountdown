@@ -4,7 +4,7 @@ final class AddEventCoordinator: CoordinatorProtocol {
     private(set) var childCoordinators: [CoordinatorProtocol] = []
     private let navigationController: UINavigationController
     private var modalNavigationController: UINavigationController?
-    private var completion: (UIImage) -> Void = { _ in}
+    private var completion: (UIImage) -> Void = { _ in }
     
     var parentCoordinator: EventListCoordinator?
     
@@ -16,7 +16,7 @@ final class AddEventCoordinator: CoordinatorProtocol {
         self.modalNavigationController = UINavigationController()
         let addEventViewController = AddEventViewController()
         modalNavigationController?.setViewControllers([addEventViewController], animated: false)
-        let addEventViewModel = AddEventViewModel(cellBuilder: EventsCellBuilder(), coreDataManager: CoreDataManager())
+        let addEventViewModel = AddEventViewModel(cellBuilder: EventsCellBuilder())
         addEventViewModel.coordinator = self
         addEventViewController.viewModel = addEventViewModel
         if let modalNavigationController = modalNavigationController {
@@ -29,10 +29,11 @@ final class AddEventCoordinator: CoordinatorProtocol {
     }
     
     func didFinishSaveEvent() {
+        parentCoordinator?.onSaveEvent()
         navigationController.dismiss(animated: true)
     }
     
-    func showImagePicker(completion: @escaping(UIImage) -> Void) {
+    func showImagePicker(completion: @escaping (UIImage) -> Void) {
         guard let modalNavigationController = modalNavigationController else { return }
         self.completion = completion
         let imagePickerCoordinator = ImagePickerCoordinator(navigationController: modalNavigationController)

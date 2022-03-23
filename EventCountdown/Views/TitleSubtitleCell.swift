@@ -37,10 +37,8 @@ final class TitleSubtitleCell: UITableViewCell {
         return datePicker
     }()
     
-    private lazy var doneButton: UIBarButtonItem = {
-        UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(tappedDone))
-    }()
-    
+    private lazy var doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(tappedDone))
+
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .black.withAlphaComponent(0.4)
@@ -61,7 +59,9 @@ final class TitleSubtitleCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+extension TitleSubtitleCell {
     func update(with viewModel: TitleSubtitleCellViewModel) {
         self.viewModel = viewModel
         
@@ -82,9 +82,7 @@ final class TitleSubtitleCell: UITableViewCell {
     
     private func configureVerticalStackView() {
         contentView.addSubview(verticalStackView)
-        verticalStackView.addArrangedSubview(titleLabel)
-        verticalStackView.addArrangedSubview(subtitleTextFiled)
-        verticalStackView.addArrangedSubview(photoImageView)
+        verticalStackView.addArrangedSubviews([titleLabel, subtitleTextFiled, photoImageView])
         
         NSLayoutConstraint.activate([
             verticalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15.0),
