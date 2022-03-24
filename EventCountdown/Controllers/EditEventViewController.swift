@@ -1,25 +1,26 @@
 import UIKit
 
-final class AddEventViewController: UIViewController {
-    var viewModel: AddEventViewModel!
+final class EditEventViewController: UIViewController {
+    var viewModel: EditEventViewModel!
     
-    lazy var addEventTableView: UITableView = {
+    lazy private var editEventTableView: UITableView = {
         let tableView = UITableView()
-        tableView.dataSource = self
         tableView.delegate = self
+        tableView.dataSource = self
         tableView.register(TitleSubtitleCell.self, forCellReuseIdentifier: "TitleSubtitleCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureView()
-        configureAddEventTableView()
+        configureEditEventTableView()
         
         viewModel.onUpdate = { [weak self] in
-            self?.addEventTableView.reloadData()
+            self?.editEventTableView.reloadData()
         }
         
         viewModel.viewDidLoad()
@@ -32,7 +33,7 @@ final class AddEventViewController: UIViewController {
     }
 }
 
-extension AddEventViewController {
+extension EditEventViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
         
@@ -43,17 +44,17 @@ extension AddEventViewController {
         navigationController?.navigationBar.tintColor = .black
     }
     
-    private func configureAddEventTableView() {
-        view.addSubview(addEventTableView)
+    private func configureEditEventTableView() {
+        view.addSubview(editEventTableView)
         NSLayoutConstraint.activate([
-            addEventTableView.topAnchor.constraint(equalTo: view.topAnchor),
-            addEventTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            addEventTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            addEventTableView.rightAnchor.constraint(equalTo: view.rightAnchor)
+            editEventTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            editEventTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            editEventTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            editEventTableView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
         
-        addEventTableView.tableFooterView = UIView()
-        addEventTableView.setContentOffset(.init(x: 0.0, y: -1.0), animated: false)
+        editEventTableView.tableFooterView = UIView()
+        editEventTableView.setContentOffset(.init(x: 0.0, y: -1.0), animated: false)
     }
     
     @objc private func tappedDone() {
@@ -61,7 +62,7 @@ extension AddEventViewController {
     }
 }
 
-extension AddEventViewController: UITableViewDataSource {
+extension EditEventViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRows()
     }
@@ -80,20 +81,20 @@ extension AddEventViewController: UITableViewDataSource {
     }
 }
 
-extension AddEventViewController: UITableViewDelegate {
+extension EditEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelectRow(at: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
-extension AddEventViewController: UITextFieldDelegate {
+extension EditEventViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let currentText = textField.text else { return false }
         let text = currentText + string
         
-        let point = textField.convert(textField.bounds.origin, to: addEventTableView)
-        if let indexPath = addEventTableView.indexPathForRow(at: point) {
+        let point = textField.convert(textField.bounds.origin, to: editEventTableView)
+        if let indexPath = editEventTableView.indexPathForRow(at: point) {
             viewModel.updateCell(indexPath: indexPath, subtitle: text)
         }
         

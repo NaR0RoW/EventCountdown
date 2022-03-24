@@ -1,4 +1,4 @@
-import UIKit
+import UIKit.UIView
 
 enum Edge {
     case left

@@ -29,7 +29,7 @@ final class TitleSubtitleCellViewModel {
         self.onCellUpdate = onCellUpdate
     }
     
-    func update(subtitle: String) {
+    func update(_ subtitle: String) {
         self.subtitle = subtitle
     }
     

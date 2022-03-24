@@ -1,9 +1,10 @@
+import CoreData
 import UIKit
 
 final class EventListCoordinator: CoordinatorProtocol {
     private(set) var childCoordinators: [CoordinatorProtocol] = []
     private let navigationController: UINavigationController
-    var onSaveEvent = {}
+    var onUpdateEvent = {}
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -14,7 +15,7 @@ final class EventListCoordinator: CoordinatorProtocol {
         let eventListViewModel = EventListViewModel()
         eventListViewController.viewModel = eventListViewModel
         eventListViewModel.coordinator = self
-        onSaveEvent = eventListViewModel.reload
+        onUpdateEvent = eventListViewModel.reload
    
         navigationController.setViewControllers([eventListViewController], animated: false)
     }
@@ -32,5 +33,12 @@ final class EventListCoordinator: CoordinatorProtocol {
         }) {
             childCoordinators.remove(at: index)
         }
+    }
+    
+    func onSelect(_ id: NSManagedObjectID) {
+        let eventDetailCoordinator = EventDetailCoordinator(navigationController: navigationController, eventID: id)
+        eventDetailCoordinator.parentCoordinator = self
+        childCoordinators.append(eventDetailCoordinator)
+        eventDetailCoordinator.start()
     }
 }

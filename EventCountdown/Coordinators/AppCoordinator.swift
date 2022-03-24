@@ -3,6 +3,11 @@ import UIKit
 protocol CoordinatorProtocol: AnyObject {
     var childCoordinators: [CoordinatorProtocol] { get }
     func start()
+    func childDidFinish(_ childCoordinator: CoordinatorProtocol)
+}
+
+extension CoordinatorProtocol {
+    func childDidFinish(_ childCoordinator: CoordinatorProtocol) { }
 }
 
 final class AppCoordinator: CoordinatorProtocol {

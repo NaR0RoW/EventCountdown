@@ -19,8 +19,11 @@ final class CoreDataManager {
     func saveEvent(name: String, date: Date, image: UIImage) {
         let event = Event(context: managedObjectContext)
         event.setValue(name, forKey: "name")
-        let imageData = image.jpegData(compressionQuality: 1.0)
+        
+        let resizedImage = image.sameAspectRatio(newHeight: 250.0)
+        let imageData = resizedImage.jpegData(compressionQuality: 0.5)
         event.setValue(imageData, forKey: "image")
+        
         event.setValue(date, forKey: "date")
         
         do {
@@ -40,6 +43,32 @@ final class CoreDataManager {
             print(error.localizedDescription)
             
             return []
+        }
+    }
+    
+    func getEvent(_ id: NSManagedObjectID) -> Event? {
+        do {
+            return try managedObjectContext.existingObject(with: id) as? Event
+        } catch {
+            print(error)
+        }
+        
+        return nil
+    }
+    
+    func updateEvent(event: Event, name: String, date: Date, image: UIImage) {
+        event.setValue(name, forKey: "name")
+        
+        let resizedImage = image.sameAspectRatio(newHeight: 250.0)
+        let imageData = resizedImage.jpegData(compressionQuality: 0.5)
+        event.setValue(imageData, forKey: "image")
+        
+        event.setValue(date, forKey: "date")
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print(error)
         }
     }
 }

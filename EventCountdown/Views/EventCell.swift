@@ -1,7 +1,7 @@
 import UIKit
 
 final class EventCell: UITableViewCell {
-    private let timeRemainingLabels = [UILabel(), UILabel(), UILabel(), UILabel()]
+    private let timeRemainingStackView = TimeRemainingStackView()
     private let dateLabel = UILabel()
     private let eventNameLabel = UILabel()
     private let backgroundImageView = UIImageView()
@@ -21,12 +21,10 @@ final class EventCell: UITableViewCell {
 
 extension EventCell {
     private func configureViews() {
-        (timeRemainingLabels + [dateLabel, eventNameLabel, backgroundImageView, verticalStackView]).forEach {
+        timeRemainingStackView.setup()
+        
+        [dateLabel, eventNameLabel, backgroundImageView, verticalStackView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-        timeRemainingLabels.forEach {
-            $0.font = .systemFont(ofSize: 28.0 , weight: .medium)
-            $0.textColor = .white
         }
         
         [dateLabel, eventNameLabel].forEach {
@@ -45,7 +43,7 @@ extension EventCell {
         contentView.addSubview(verticalStackView)
         contentView.addSubview(eventNameLabel)
         
-        verticalStackView.addArrangedSubviews(timeRemainingLabels + [UIView(), dateLabel])
+        verticalStackView.addArrangedSubviews([timeRemainingStackView, UIView(), dateLabel])
         
         backgroundImageView.pinToSuperviewEdges([.left, .top, .right, .bottom])
         let bottomConstraint = backgroundImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
@@ -58,9 +56,10 @@ extension EventCell {
     }
     
     func update(with viewModel: EventCellViewModel) {
-        viewModel.timeRemainingStrings.enumerated().forEach {
-            timeRemainingLabels[$0.offset].text = $0.element
+        if let timeRemainingViewModel = viewModel.timeRemainingViewModel {
+            timeRemainingStackView.update(with: timeRemainingViewModel)
         }
+       
         dateLabel.text = viewModel.dateText
         eventNameLabel.text = viewModel.eventName
         
