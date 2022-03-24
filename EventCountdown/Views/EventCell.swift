@@ -1,17 +1,53 @@
 import UIKit
 
 final class EventCell: UITableViewCell {
-    private let timeRemainingStackView: TimeRemainingStackView = TimeRemainingStackView()
-    private let dateLabel: UILabel = UILabel()
-    private let eventNameLabel: UILabel = UILabel()
-    private let backgroundImageView: UIImageView = UIImageView()
-    private let verticalStackView: UIStackView = UIStackView()
+    private let timeRemainingStackView: TimeRemainingStackView = {
+        let stackView = TimeRemainingStackView()
+        
+        return stackView
+    }()
+    
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 22.0, weight: .medium)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private let eventNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 34.0, weight: .bold)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private let backgroundImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 10.0
+        imageView.layer.masksToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageView
+    }()
+    
+    private let verticalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .trailing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        configureViews()
-        configureConstraints()
+        timeRemainingStackView.setup()
+        configureView()
     }
     
     required init?(coder: NSCoder) {
@@ -20,39 +56,38 @@ final class EventCell: UITableViewCell {
 }
 
 extension EventCell {
-    private func configureViews() {
-        timeRemainingStackView.setup()
-        
-        [dateLabel, eventNameLabel, backgroundImageView, verticalStackView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        [dateLabel, eventNameLabel].forEach {
-            $0.textColor = .white
-        }
-        
-        dateLabel.font = .systemFont(ofSize: 22.0, weight: .medium)
-        eventNameLabel.font = .systemFont(ofSize: 34.0, weight: .bold)
-        
-        verticalStackView.axis = .vertical
-        verticalStackView.alignment = .trailing
+    private func configureView() {
+        configureBackgroundImageView()
+        configureVerticalStackView()
+        configureEventNameLabel()
     }
     
-    private func configureConstraints() {
+    private func configureBackgroundImageView() {
         contentView.addSubview(backgroundImageView)
-        contentView.addSubview(verticalStackView)
-        contentView.addSubview(eventNameLabel)
-        
+        NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
+            backgroundImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 15.0),
+            backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15.0),
+            backgroundImageView.rightAnchor.constraint(equalTo: rightAnchor, constant: -15.0)
+        ])
+    }
+    
+    private func configureVerticalStackView() {
+        backgroundImageView.addSubview(verticalStackView)
         verticalStackView.addArrangedSubviews([timeRemainingStackView, UIView(), dateLabel])
-        
-        backgroundImageView.pinToSuperviewEdges([.left, .top, .right, .bottom])
-        let bottomConstraint = backgroundImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        bottomConstraint.priority = .required - 1
-        bottomConstraint.isActive = true
-        
-        backgroundImageView.heightAnchor.constraint(equalToConstant: 250.0).isActive = true
-        verticalStackView.pinToSuperviewEdges([.top, .right, .bottom], constant: 15.0)
-        eventNameLabel.pinToSuperviewEdges([.left, .bottom], constant: 15.0)
+        NSLayoutConstraint.activate([
+            verticalStackView.topAnchor.constraint(equalTo: backgroundImageView.topAnchor, constant: 15.0),
+            verticalStackView.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: -15.0),
+            verticalStackView.rightAnchor.constraint(equalTo: backgroundImageView.rightAnchor, constant: -15.0)
+        ])
+    }
+    
+    private func configureEventNameLabel() {
+        backgroundImageView.addSubview(eventNameLabel)
+        NSLayoutConstraint.activate([
+            eventNameLabel.leftAnchor.constraint(equalTo: backgroundImageView.leftAnchor, constant: 15.0),
+            eventNameLabel.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: -15.0)
+        ])
     }
     
     func update(with viewModel: EventCellViewModel) {

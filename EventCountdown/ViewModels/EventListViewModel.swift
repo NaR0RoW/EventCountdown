@@ -1,7 +1,7 @@
 import Foundation
 
 final class EventListViewModel {
-    let title = "Events"
+    let title = "Upcoming Events"
     var coordinator: EventListCoordinator?
     var onUpdate = { }
     
@@ -19,6 +19,10 @@ final class EventListViewModel {
     
     func tappedAddEvent() {
         coordinator?.startAddEvent()
+    }
+    
+    func tappedSettings() {
+        coordinator?.startSettings()
     }
     
     func numberOfRows() -> Int {

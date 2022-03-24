@@ -7,7 +7,7 @@ final class AddEventViewController: UIViewController {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(TitleSubtitleCell.self, forCellReuseIdentifier: "TitleSubtitleCell")
+        tableView.registerCell(TitleSubtitleCell.self)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         return tableView
@@ -71,9 +71,7 @@ extension AddEventViewController: UITableViewDataSource {
         
         switch cellViewModel {
         case .titleSubtitle(let titleSubtitleCellViewModel):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TitleSubtitleCell", for: indexPath) as? TitleSubtitleCell else {
-                return UITableViewCell()
-            }
+            let cell = tableView.dequeueReusableCell(forIndexPath: indexPath) as TitleSubtitleCell
             cell.update(with: titleSubtitleCellViewModel)
             cell.subtitleTextFiled.delegate = self
             

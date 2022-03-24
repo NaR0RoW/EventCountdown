@@ -20,7 +20,7 @@ final class CoreDataManager {
     func getAll<T: NSManagedObject>() -> [T] {
         do {
             let fetchRequest = NSFetchRequest<T>(entityName: "\(T.self)")
-           
+            
             return try managedObjectContext.fetch(fetchRequest)
         } catch {
             print(error.localizedDescription)

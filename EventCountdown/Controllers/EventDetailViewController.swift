@@ -5,7 +5,7 @@ final class EventDetailViewController: UIViewController {
     
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -37,10 +37,7 @@ final class EventDetailViewController: UIViewController {
 
 extension EventDetailViewController {
     private func configureView() {
-        view.backgroundColor = .systemBackground
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: eventDetailViewModel, action: #selector(eventDetailViewModel.editButtonTapped))
-        navigationItem.rightBarButtonItem?.tintColor = .lightPurple
         navigationController?.navigationBar.tintColor = .lightPurple
         
         configureBackgroundImageView()

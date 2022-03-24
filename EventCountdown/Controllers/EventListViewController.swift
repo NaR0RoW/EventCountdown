@@ -5,9 +5,10 @@ final class EventListViewController: UIViewController {
     
     lazy private var eventListTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(EventCell.self, forCellReuseIdentifier: "EventCell")
+        tableView.registerCell(EventCell.self)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         return tableView
@@ -29,18 +30,32 @@ final class EventListViewController: UIViewController {
 
 extension EventListViewController {
     private func configureView() {
-        view.backgroundColor = .systemBackground
-        
         navigationItem.title = eventListViewModel.title
-        navigationController?.navigationBar.prefersLargeTitles = true
+
+        // To hide UINavigationBar gray bottom line
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .systemBackground
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
         
-        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle.fill"), style: .plain, target: self, action: #selector(tapAddEventButton))
-        barButtonItem.tintColor = .lightPurple
-        navigationItem.rightBarButtonItem = barButtonItem
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(tapAddEventButton))
+        rightBarButtonItem.tintColor = .label
+        
+        let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(tapSettingsButton))
+        leftBarButtonItem.tintColor = .label
+        
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
     @objc private func tapAddEventButton() {
         eventListViewModel.tappedAddEvent()
+    }
+    
+    @objc private func tapSettingsButton() {
+        eventListViewModel.tappedSettings()
     }
     
     private func configureTableView() {
@@ -62,9 +77,7 @@ extension EventListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch eventListViewModel.cell(at: indexPath) {
         case .event(let eventCellViewModel):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as? EventCell else {
-                return UITableViewCell()
-            }
+            let cell = tableView.dequeueReusableCell(forIndexPath: indexPath) as EventCell
             cell.update(with: eventCellViewModel)
             
             return cell
@@ -74,10 +87,11 @@ extension EventListViewController: UITableViewDataSource {
 
 extension EventListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         eventListViewModel.didSelectRow(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250.0
+        return 400.0
     }
 }
