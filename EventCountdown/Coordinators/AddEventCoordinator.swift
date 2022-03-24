@@ -1,12 +1,13 @@
 import UIKit
 
-final class AddEventCoordinator: CoordinatorProtocol {
+final class AddEventCoordinator: CoordinatorProtocol & EventUpdatingCoordinator {
     private(set) var childCoordinators: [CoordinatorProtocol] = []
     private let navigationController: UINavigationController
     private var modalNavigationController: UINavigationController?
     private var completion: (UIImage) -> Void = { _ in }
+    var onUpdateEvent: (() -> Void)?
     
-    var parentCoordinator: EventListCoordinator?
+    var parentCoordinator: (EventUpdatingCoordinator & CoordinatorProtocol)?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -18,7 +19,7 @@ final class AddEventCoordinator: CoordinatorProtocol {
         modalNavigationController?.setViewControllers([addEventViewController], animated: false)
         let addEventViewModel = AddEventViewModel(cellBuilder: EventsCellBuilder())
         addEventViewModel.coordinator = self
-        addEventViewController.viewModel = addEventViewModel
+        addEventViewController.addEventViewModel = addEventViewModel
         if let modalNavigationController = modalNavigationController {
             navigationController.present(modalNavigationController, animated: true, completion: nil)
         }
@@ -29,7 +30,7 @@ final class AddEventCoordinator: CoordinatorProtocol {
     }
     
     func didFinishSaveEvent() {
-        parentCoordinator?.onUpdateEvent()
+        parentCoordinator?.onUpdateEvent!()
         navigationController.dismiss(animated: true)
     }
     

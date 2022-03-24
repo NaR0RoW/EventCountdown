@@ -1,12 +1,12 @@
 import UIKit
 
-final class EditEventCoordinator: CoordinatorProtocol {
+final class EditEventCoordinator: CoordinatorProtocol & EventUpdatingCoordinator {
     private(set) var childCoordinators: [CoordinatorProtocol] = []
     private let navigationController: UINavigationController
     private var completion: (UIImage) -> Void = { _ in }
     private let event: Event
-    
-    var parentCoordinator: EventDetailCoordinator?
+    var onUpdateEvent: (() -> Void)?
+    var parentCoordinator: (EventUpdatingCoordinator & CoordinatorProtocol)?
     
     init(navigationController: UINavigationController, event: Event) {
         self.navigationController = navigationController
@@ -17,7 +17,7 @@ final class EditEventCoordinator: CoordinatorProtocol {
         let editEventViewController = EditEventViewController()
         let editEventViewModel = EditEventViewModel(cellBuilder: EventsCellBuilder(), event: event)
         editEventViewModel.coordinator = self
-        editEventViewController.viewModel = editEventViewModel
+        editEventViewController.editEventViewModel = editEventViewModel
         navigationController.pushViewController(editEventViewController, animated: true)
     }
     
@@ -26,7 +26,7 @@ final class EditEventCoordinator: CoordinatorProtocol {
     }
     
     func didFinishUpdateEvent() {
-        parentCoordinator?.onUpdateEvent()
+        parentCoordinator?.onUpdateEvent!()
         navigationController.popViewController(animated: true)
     }
     

@@ -1,7 +1,7 @@
 import UIKit
 
 final class EventListViewController: UIViewController {
-    var viewModel: EventListViewModel!
+    var eventListViewModel: EventListViewModel!
     
     lazy private var eventListTableView: UITableView = {
         let tableView = UITableView()
@@ -12,8 +12,6 @@ final class EventListViewController: UIViewController {
         
         return tableView
     }()
-    
-    private let coreDataManager = CoreDataManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,11 +19,11 @@ final class EventListViewController: UIViewController {
         configureView()
         configureTableView()
         
-        viewModel.onUpdate = { [weak self] in
+        eventListViewModel.onUpdate = { [weak self] in
             self?.eventListTableView.reloadData()
         }
         
-        viewModel.viewDidLoad()
+        eventListViewModel.viewDidLoad()
     }
 }
 
@@ -33,7 +31,7 @@ extension EventListViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
         
-        navigationItem.title = viewModel.title
+        navigationItem.title = eventListViewModel.title
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle.fill"), style: .plain, target: self, action: #selector(tapAddEventButton))
@@ -42,7 +40,7 @@ extension EventListViewController {
     }
     
     @objc private func tapAddEventButton() {
-        viewModel.tappedAddEvent()
+        eventListViewModel.tappedAddEvent()
     }
     
     private func configureTableView() {
@@ -58,13 +56,15 @@ extension EventListViewController {
 
 extension EventListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRows()
+        return eventListViewModel.numberOfRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch viewModel.cell(at: indexPath) {
+        switch eventListViewModel.cell(at: indexPath) {
         case .event(let eventCellViewModel):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as? EventCell else {
+                return UITableViewCell()
+            }
             cell.update(with: eventCellViewModel)
             
             return cell
@@ -74,6 +74,10 @@ extension EventListViewController: UITableViewDataSource {
 
 extension EventListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelectRow(at: indexPath)
+        eventListViewModel.didSelectRow(at: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 250.0
     }
 }

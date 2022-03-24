@@ -1,11 +1,11 @@
 import UIKit
 
 final class EventCell: UITableViewCell {
-    private let timeRemainingStackView = TimeRemainingStackView()
-    private let dateLabel = UILabel()
-    private let eventNameLabel = UILabel()
-    private let backgroundImageView = UIImageView()
-    private let verticalStackView = UIStackView()
+    private let timeRemainingStackView: TimeRemainingStackView = TimeRemainingStackView()
+    private let dateLabel: UILabel = UILabel()
+    private let eventNameLabel: UILabel = UILabel()
+    private let backgroundImageView: UIImageView = UIImageView()
+    private let verticalStackView: UIStackView = UIStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

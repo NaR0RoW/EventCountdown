@@ -3,7 +3,7 @@ import UIKit
 
 final class EventDetailViewModel {
     private let eventID: NSManagedObjectID
-    private let coreDataManager: CoreDataManager
+    private let eventManager: EventManagerProtocol
     private var event: Event?
     private let date = Date()
     var onUpdate = {}
@@ -23,9 +23,9 @@ final class EventDetailViewModel {
     
     var coordinator: EventDetailCoordinator?
     
-    init(eventID: NSManagedObjectID, coreDataManager: CoreDataManager = .shared) {
+    init(eventID: NSManagedObjectID, eventManager: EventManagerProtocol = EventManager()) {
         self.eventID = eventID
-        self.coreDataManager = coreDataManager
+        self.eventManager = eventManager
     }
     
     func viewDidLoad() {
@@ -42,7 +42,7 @@ final class EventDetailViewModel {
     }
     
     func reload() {
-        event = coreDataManager.getEvent(eventID)
+        event = eventManager.getEvent(eventID)
         onUpdate()
     }
 }

@@ -1,12 +1,12 @@
-import UIKit
 import CoreData
+import UIKit
 
-final class EventDetailCoordinator: CoordinatorProtocol {
+final class EventDetailCoordinator: CoordinatorProtocol & EventUpdatingCoordinator {
     private(set) var childCoordinators: [CoordinatorProtocol] = []
     private let navigationController: UINavigationController
     private let eventID: NSManagedObjectID
-    var parentCoordinator: EventListCoordinator?
-    var onUpdateEvent = { }
+    var onUpdateEvent: (() -> Void)?
+    var parentCoordinator: (EventUpdatingCoordinator & CoordinatorProtocol)?
     
     init(navigationController: UINavigationController, eventID: NSManagedObjectID) {
         self.navigationController = navigationController
@@ -19,9 +19,9 @@ final class EventDetailCoordinator: CoordinatorProtocol {
         eventDetailViewModel.coordinator = self
         onUpdateEvent = {
             eventDetailViewModel.reload()
-            self.parentCoordinator?.onUpdateEvent()
+            self.parentCoordinator?.onUpdateEvent!()
         }
-        detailViewController.viewModel = eventDetailViewModel
+        detailViewController.eventDetailViewModel = eventDetailViewModel
         navigationController.pushViewController(detailViewController, animated: true)
     }
     

@@ -6,6 +6,10 @@ protocol CoordinatorProtocol: AnyObject {
     func childDidFinish(_ childCoordinator: CoordinatorProtocol)
 }
 
+protocol EventUpdatingCoordinator {
+    var onUpdateEvent: (() -> Void)? { get }
+}
+
 extension CoordinatorProtocol {
     func childDidFinish(_ childCoordinator: CoordinatorProtocol) { }
 }

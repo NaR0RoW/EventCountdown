@@ -1,10 +1,10 @@
 import CoreData
 import UIKit
 
-final class EventListCoordinator: CoordinatorProtocol {
+final class EventListCoordinator: CoordinatorProtocol & EventUpdatingCoordinator {
     private(set) var childCoordinators: [CoordinatorProtocol] = []
     private let navigationController: UINavigationController
-    var onUpdateEvent = {}
+    var onUpdateEvent: (() -> Void)?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -13,7 +13,7 @@ final class EventListCoordinator: CoordinatorProtocol {
     func start() {
         let eventListViewController = EventListViewController()
         let eventListViewModel = EventListViewModel()
-        eventListViewController.viewModel = eventListViewModel
+        eventListViewController.eventListViewModel = eventListViewModel
         eventListViewModel.coordinator = self
         onUpdateEvent = eventListViewModel.reload
    

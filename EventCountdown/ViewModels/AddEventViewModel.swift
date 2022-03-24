@@ -15,7 +15,7 @@ final class AddEventViewModel {
     }
     
     private let cellBuilder: EventsCellBuilder
-    private let coreDataManager: CoreDataManager
+    private let eventManager: EventManagerProtocol
     
     lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -24,9 +24,9 @@ final class AddEventViewModel {
         return dateFormatter
     }()
     
-    init(cellBuilder: EventsCellBuilder, coreDataManager: CoreDataManager = CoreDataManager.shared) {
+    init(cellBuilder: EventsCellBuilder, eventManager: EventManagerProtocol = EventManager()) {
         self.cellBuilder = cellBuilder
-        self.coreDataManager = coreDataManager
+        self.eventManager = eventManager
     }
     
     func viewDidDisappear() {
@@ -53,7 +53,7 @@ final class AddEventViewModel {
               let date = dateFormatter.date(from: dateString)
         else { return }
         
-        coreDataManager.saveEvent(name: name, date: date, image: image)
+        eventManager.perform(.add, data: EventManager.EventInputData(name: name, date: date, image: image))
         coordinator?.didFinishSaveEvent()
     }
     

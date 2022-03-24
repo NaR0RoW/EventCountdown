@@ -1,7 +1,7 @@
 import UIKit
 
 final class TitleSubtitleCell: UITableViewCell {
-    private var viewModel: TitleSubtitleCellViewModel?
+    private var titleSubtitleCellViewModel: TitleSubtitleCellViewModel?
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -63,7 +63,7 @@ final class TitleSubtitleCell: UITableViewCell {
 
 extension TitleSubtitleCell {
     func update(with viewModel: TitleSubtitleCellViewModel) {
-        self.viewModel = viewModel
+        self.titleSubtitleCellViewModel = viewModel
         
         titleLabel.text = viewModel.title
         subtitleTextFiled.text = viewModel.subtitle
@@ -101,6 +101,6 @@ extension TitleSubtitleCell {
     }
     
     @objc private func tappedDone() {
-        viewModel?.update(datePickerView.date)
+        titleSubtitleCellViewModel?.update(datePickerView.date)
     }
 }

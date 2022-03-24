@@ -11,10 +11,10 @@ final class EventListViewModel {
     
     private(set) var cells: [Cell] = []
     
-    private let coreDataManager: CoreDataManager
+    private let eventManager: EventManagerProtocol
 
-    init(coreDataManager: CoreDataManager = CoreDataManager.shared) {
-        self.coreDataManager = coreDataManager
+    init(eventManager: EventManagerProtocol = EventManager()) {
+        self.eventManager = eventManager
     }
     
     func tappedAddEvent() {
@@ -35,7 +35,7 @@ final class EventListViewModel {
     
     func reload() {
         EventCellViewModel.imageCache.removeAllObjects()
-        let events = coreDataManager.fetchEvent()
+        let events = eventManager.getEvents()
         cells = events.map {
             var eventCellViewModel = EventCellViewModel($0)
             if let coordinator = coordinator {

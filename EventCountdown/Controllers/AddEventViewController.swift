@@ -1,9 +1,9 @@
 import UIKit
 
 final class AddEventViewController: UIViewController {
-    var viewModel: AddEventViewModel!
+    var addEventViewModel: AddEventViewModel!
     
-    lazy var addEventTableView: UITableView = {
+    lazy private var addEventTableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
@@ -18,17 +18,17 @@ final class AddEventViewController: UIViewController {
         configureView()
         configureAddEventTableView()
         
-        viewModel.onUpdate = { [weak self] in
+        addEventViewModel.onUpdate = { [weak self] in
             self?.addEventTableView.reloadData()
         }
         
-        viewModel.viewDidLoad()
+        addEventViewModel.viewDidLoad()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        viewModel.viewDidDisappear()
+        addEventViewModel.viewDidDisappear()
     }
 }
 
@@ -36,7 +36,7 @@ extension AddEventViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
         
-        navigationItem.title = viewModel.title
+        navigationItem.title = addEventViewModel.title
         navigationController?.navigationBar.prefersLargeTitles = true
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(tappedDone))
@@ -57,21 +57,23 @@ extension AddEventViewController {
     }
     
     @objc private func tappedDone() {
-        viewModel.tappedDone()
+        addEventViewModel.tappedDone()
     }
 }
 
 extension AddEventViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRows()
+        return addEventViewModel.numberOfRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellViewModel = viewModel.cell(for: indexPath)
+        let cellViewModel = addEventViewModel.cell(for: indexPath)
         
         switch cellViewModel {
         case .titleSubtitle(let titleSubtitleCellViewModel):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TitleSubtitleCell", for: indexPath) as! TitleSubtitleCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TitleSubtitleCell", for: indexPath) as? TitleSubtitleCell else {
+                return UITableViewCell()
+            }
             cell.update(with: titleSubtitleCellViewModel)
             cell.subtitleTextFiled.delegate = self
             
@@ -82,7 +84,7 @@ extension AddEventViewController: UITableViewDataSource {
 
 extension AddEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelectRow(at: indexPath)
+        addEventViewModel.didSelectRow(at: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -94,7 +96,7 @@ extension AddEventViewController: UITextFieldDelegate {
         
         let point = textField.convert(textField.bounds.origin, to: addEventTableView)
         if let indexPath = addEventTableView.indexPathForRow(at: point) {
-            viewModel.updateCell(indexPath: indexPath, subtitle: text)
+            addEventViewModel.updateCell(indexPath: indexPath, subtitle: text)
         }
         
         return true

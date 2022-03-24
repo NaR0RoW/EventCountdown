@@ -3,7 +3,7 @@ import UIKit
 final class ImagePickerCoordinator: NSObject, CoordinatorProtocol {
     private(set) var childCoordinators: [CoordinatorProtocol] = []
     private let navigationController: UINavigationController
-    var parentCoordinator: CoordinatorProtocol?
+    var parentCoordinator: (EventUpdatingCoordinator & CoordinatorProtocol)?
     var onFinishPicking: (UIImage) -> Void = { _ in }
     
     init(navigationController: UINavigationController) {

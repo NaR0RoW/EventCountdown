@@ -1,7 +1,7 @@
 import UIKit
 
 final class EventDetailViewController: UIViewController {
-    var viewModel: EventDetailViewModel!
+    var eventDetailViewModel: EventDetailViewModel!
     
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -18,28 +18,30 @@ final class EventDetailViewController: UIViewController {
         configureView()
         timeRemainingStackView.setup()
         
-        viewModel.onUpdate = { [weak self] in
+        eventDetailViewModel.onUpdate = { [weak self] in
             guard let self = self,
-                  let timeRemainingViewModel = self.viewModel.timeRemainingViewModel
+                  let timeRemainingViewModel = self.eventDetailViewModel.timeRemainingViewModel
             else { return }
-            self.backgroundImageView.image = self.viewModel.image
+            self.backgroundImageView.image = self.eventDetailViewModel.image
             self.timeRemainingStackView.update(with: timeRemainingViewModel)
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: viewModel, action: #selector(viewModel.editButtonTapped))
-        
-        viewModel.viewDidLoad()
+        eventDetailViewModel.viewDidLoad()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        viewModel.viewDidDisappear()
+        eventDetailViewModel.viewDidDisappear()
     }
 }
 
 extension EventDetailViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: eventDetailViewModel, action: #selector(eventDetailViewModel.editButtonTapped))
+        navigationItem.rightBarButtonItem?.tintColor = .lightPurple
+        navigationController?.navigationBar.tintColor = .lightPurple
         
         configureBackgroundImageView()
         configureTimeRemainingStackView()
