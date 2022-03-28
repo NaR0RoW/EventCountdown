@@ -31,12 +31,7 @@ extension SettingsViewController {
     private func configureView() {
         navigationItem.title = settingsViewModel.title
         
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .systemBackground
-        navigationItem.standardAppearance = appearance
-        navigationItem.scrollEdgeAppearance = appearance
-        navigationItem.compactAppearance = appearance
+        hideNavigationBarGrayBottomLine()
         
         let imageIcon = UIImage(systemName: "xmark")?.withTintColor(.label, renderingMode: .alwaysOriginal)
         let leftBarButtonItem = UIBarButtonItem(image: imageIcon, style: .plain, target: navigationController, action: #selector(UINavigationController.popViewController(animated:)))
@@ -56,11 +51,12 @@ extension SettingsViewController {
 
 extension SettingsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return settingsViewModel.settingsModelData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(forIndexPath: indexPath) as SettingsCell
+        cell.configure(with: settingsViewModel, for: indexPath)
     
         return cell
     }

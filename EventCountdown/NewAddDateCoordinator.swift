@@ -1,21 +1,20 @@
 import UIKit
 
-final class SettingsCoordinator: CoordinatorProtocol & EventUpdatingCoordinator {
+final class NewAddDateCoordinator: CoordinatorProtocol {
     private(set) var childCoordinators: [CoordinatorProtocol] = []
     private let navigationController: UINavigationController
-    var onUpdateEvent: (() -> Void)?
-    var parentCoordinator: (EventUpdatingCoordinator & CoordinatorProtocol)?
+    var parentCoordinator: CoordinatorProtocol?
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
     func start() {
-        let settingsViewController = SettingsViewController()
-        let settingsViewModel = SettingsViewModel()
-        settingsViewModel.coordinator = self
-        settingsViewController.settingsViewModel = settingsViewModel
-        navigationController.pushViewController(settingsViewController, animated: true)
+        let newAddDateViewController = NewAddDateViewController()
+        let newAddDateViewModel = NewAddDateViewModel()
+        newAddDateViewModel.coordinator = self
+        newAddDateViewController.newAddDateViewModel = newAddDateViewModel
+        navigationController.pushViewController(newAddDateViewController, animated: true)
     }
 
     func didFinish() {

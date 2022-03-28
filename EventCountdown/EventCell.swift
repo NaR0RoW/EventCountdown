@@ -57,6 +57,8 @@ final class EventCell: UITableViewCell {
 
 extension EventCell {
     private func configureView() {
+        selectionStyle = .none
+        
         configureBackgroundImageView()
         configureVerticalStackView()
         configureEventNameLabel()

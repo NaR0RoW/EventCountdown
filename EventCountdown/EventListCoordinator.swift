@@ -41,6 +41,13 @@ final class EventListCoordinator: CoordinatorProtocol & EventUpdatingCoordinator
         settingsCoordinator.start()
     }
     
+    func startAddNewEvent() {
+        let newAddEventCoordinator = NewAddEventCoordinator(navigationController: navigationController)
+        newAddEventCoordinator.parentCoordinator = self
+        childCoordinators.append(newAddEventCoordinator)
+        newAddEventCoordinator.start()
+    }
+    
     func childDidFinish(_ childCoordinator: CoordinatorProtocol) {
         if let index = childCoordinators.firstIndex(where: { coordinator in
             return childCoordinator === coordinator

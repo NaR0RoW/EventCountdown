@@ -1,22 +1,22 @@
 import UIKit
 
 final class SettingsCell: UITableViewCell {
+    private let settingsImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .label
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageView
+    }()
+    
     private let settingsNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 22.0, weight: .bold)
+        label.font = .systemFont(ofSize: 22.0)
         label.textColor = .label
         label.text = "Test"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
-    }()
-    
-    private let settingsImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.fill")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return imageView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -37,7 +37,7 @@ extension SettingsCell {
         NSLayoutConstraint.activate([
             settingsImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             settingsImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 15.0),
-            settingsImageView.widthAnchor.constraint(equalToConstant: contentView.frame.height),
+            settingsImageView.widthAnchor.constraint(equalToConstant: contentView.frame.height / 1.5),
             settingsImageView.heightAnchor.constraint(equalTo: settingsImageView.widthAnchor)
         ])
     }
@@ -48,5 +48,10 @@ extension SettingsCell {
             settingsNameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             settingsNameLabel.leftAnchor.constraint(equalTo: settingsImageView.rightAnchor, constant: 20.0)
         ])
+    }
+    
+    func configure(with viewModel: SettingsViewModel, for indexPath: IndexPath) {
+        settingsImageView.image = viewModel.settingsModelData[indexPath.row].image
+        settingsNameLabel.text = viewModel.settingsModelData[indexPath.row].name
     }
 }

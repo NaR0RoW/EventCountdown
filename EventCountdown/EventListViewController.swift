@@ -32,13 +32,7 @@ extension EventListViewController {
     private func configureView() {
         navigationItem.title = eventListViewModel.title
 
-        // To hide UINavigationBar gray bottom line
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .systemBackground
-        navigationItem.standardAppearance = appearance
-        navigationItem.scrollEdgeAppearance = appearance
-        navigationItem.compactAppearance = appearance
+       hideNavigationBarGrayBottomLine()
         
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(tapAddEventButton))
         rightBarButtonItem.tintColor = .label
@@ -51,7 +45,11 @@ extension EventListViewController {
     }
     
     @objc private func tapAddEventButton() {
-        eventListViewModel.tappedAddEvent()
+        // Old version
+//        eventListViewModel.tappedAddEvent()
+        
+        // New version
+        eventListViewModel.tappedAddNewEvent()
     }
     
     @objc private func tapSettingsButton() {
@@ -87,7 +85,6 @@ extension EventListViewController: UITableViewDataSource {
 
 extension EventListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         eventListViewModel.didSelectRow(at: indexPath)
     }
     

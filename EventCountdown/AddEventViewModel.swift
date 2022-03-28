@@ -4,7 +4,7 @@ final class AddEventViewModel {
     weak var coordinator: AddEventCoordinator?
     private(set) var cells: [Cell] = []
     var onUpdate: () -> Void = { }
-    let title = "Add"
+    let title: String = "Add"
     
     private var nameCellViewModel: TitleSubtitleCellViewModel?
     private var dateCellViewModel: TitleSubtitleCellViewModel?

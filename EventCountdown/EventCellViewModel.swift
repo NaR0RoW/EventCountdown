@@ -10,16 +10,7 @@ struct EventCellViewModel {
     private var cacheKey: String {
         event.objectID.description
     }
-    
-    var timeRemainingStrings: [String] {
-        guard let eventDate = event.date else { return [] }
-        return date.timeRemaining(until: eventDate)?.components(separatedBy: ",") ?? []
-    }
-    
-    var dayText: String {
-        "2 days"
-    }
-    
+
     var dateText: String? {
         guard let eventDate = event.date else { return nil }
         
