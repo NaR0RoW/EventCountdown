@@ -1,7 +1,7 @@
 import Foundation
 
-final class AddEventViewModel {
-    weak var coordinator: AddEventCoordinator?
+final class OldAddEventViewModel {
+    weak var coordinator: OldAddEventCoordinator?
     private(set) var cells: [Cell] = []
     var onUpdate: () -> Void = { }
     let title: String = "Add"
@@ -75,7 +75,7 @@ final class AddEventViewModel {
     }
 }
 
-private extension AddEventViewModel {
+private extension OldAddEventViewModel {
     func setupCells() {
         nameCellViewModel = cellBuilder.makeTitleSubtitleCellViewModel(.text)
         

@@ -1,12 +1,10 @@
 import UIKit
 
-final class AddEventViewController: UIViewController {
-    var addEventViewModel: AddEventViewModel!
+final class OldAddEventViewController: UIViewController {
+    var addEventViewModel: OldAddEventViewModel!
     
-    lazy private var addEventTableView: UITableView = {
+    private let addEventTableView: UITableView = {
         let tableView = UITableView()
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.registerCell(TitleSubtitleCell.self)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -32,7 +30,7 @@ final class AddEventViewController: UIViewController {
     }
 }
 
-extension AddEventViewController {
+extension OldAddEventViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
         
@@ -45,6 +43,8 @@ extension AddEventViewController {
     
     private func configureAddEventTableView() {
         view.addSubview(addEventTableView)
+        addEventTableView.dataSource = self
+        addEventTableView.delegate = self
         NSLayoutConstraint.activate([
             addEventTableView.topAnchor.constraint(equalTo: view.topAnchor),
             addEventTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -61,7 +61,7 @@ extension AddEventViewController {
     }
 }
 
-extension AddEventViewController: UITableViewDataSource {
+extension OldAddEventViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return addEventViewModel.numberOfRows()
     }
@@ -80,14 +80,14 @@ extension AddEventViewController: UITableViewDataSource {
     }
 }
 
-extension AddEventViewController: UITableViewDelegate {
+extension OldAddEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         addEventViewModel.didSelectRow(at: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
-extension AddEventViewController: UITextFieldDelegate {
+extension OldAddEventViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let currentText = textField.text else { return false }
         let text = currentText + string

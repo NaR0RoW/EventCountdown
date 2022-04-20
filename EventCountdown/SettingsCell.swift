@@ -51,7 +51,7 @@ extension SettingsCell {
     }
     
     func configure(with viewModel: SettingsViewModel, for indexPath: IndexPath) {
-        settingsImageView.image = viewModel.settingsModelData[indexPath.row].image
-        settingsNameLabel.text = viewModel.settingsModelData[indexPath.row].name
+        settingsImageView.image = viewModel.cell(at: indexPath).image
+        settingsNameLabel.text = viewModel.cell(at: indexPath).name
     }
 }

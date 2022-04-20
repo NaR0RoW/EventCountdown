@@ -5,7 +5,7 @@ final class SettingsViewModel {
     
     var coordinator: SettingsCoordinator?
     
-    let settingsModelData: [SettingsModel] = [
+    private let settingsModelData: [SettingsModel] = [
         SettingsModel(image: UIImage(systemName: "gearshape")!, name: "Preferences"),
         SettingsModel(image: UIImage(systemName: "moon.fill")!, name: "Night mode"),
         SettingsModel(image: UIImage(systemName: "questionmark.circle")!, name: "Support"),
@@ -17,5 +17,13 @@ final class SettingsViewModel {
     
     func viewDidDisappear() {
         coordinator?.didFinish()
+    }
+    
+    func numberOfRows() -> Int {
+        return settingsModelData.count
+    }
+    
+    func cell(at indexPath: IndexPath) -> SettingsModel {
+        return settingsModelData[indexPath.row]
     }
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-final class NewAddEventCoordinator: CoordinatorProtocol {
+final class AddEventTitleCoordinator: CoordinatorProtocol {
     private(set) var childCoordinators: [CoordinatorProtocol] = []
     private let navigationController: UINavigationController
     var parentCoordinator: CoordinatorProtocol?
@@ -10,18 +10,18 @@ final class NewAddEventCoordinator: CoordinatorProtocol {
     }
 
     func start() {
-        let newAddEventViewController = NewAddEventViewController()
-        let newAddEventViewModel = NewAddEventViewModel()
-        newAddEventViewModel.coordinator = self
-        newAddEventViewController.newAddEventViewModel = newAddEventViewModel
-        navigationController.pushViewController(newAddEventViewController, animated: true)
+        let addEventTitleViewController = AddEventTitleViewController()
+        let addEventTitleViewModel = AddEventTitleViewModel()
+        addEventTitleViewModel.coordinator = self
+        addEventTitleViewController.addEventTitleViewModel = addEventTitleViewModel
+        navigationController.pushViewController(addEventTitleViewController, animated: true)
     }
     
     func startAddDate() {
-        let newAddDateCoordinator = NewAddDateCoordinator(navigationController: navigationController)
-        newAddDateCoordinator.parentCoordinator = self
-        childCoordinators.append(newAddDateCoordinator)
-        newAddDateCoordinator.start()
+        let addDateCoordinator = AddEventDateCoordinator(navigationController: navigationController)
+        addDateCoordinator.parentCoordinator = self
+        childCoordinators.append(addDateCoordinator)
+        addDateCoordinator.start()
     }
 
     func didFinish() {

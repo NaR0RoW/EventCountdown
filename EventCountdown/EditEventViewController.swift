@@ -3,10 +3,8 @@ import UIKit
 final class EditEventViewController: UIViewController {
     var editEventViewModel: EditEventViewModel!
     
-    lazy private var editEventTableView: UITableView = {
+    private let editEventTableView: UITableView = {
         let tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.registerCell(TitleSubtitleCell.self)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -46,6 +44,8 @@ extension EditEventViewController {
     
     private func configureEditEventTableView() {
         view.addSubview(editEventTableView)
+        editEventTableView.delegate = self
+        editEventTableView.dataSource = self
         NSLayoutConstraint.activate([
             editEventTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             editEventTableView.leftAnchor.constraint(equalTo: view.leftAnchor),

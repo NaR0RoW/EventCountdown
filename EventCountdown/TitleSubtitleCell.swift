@@ -37,7 +37,8 @@ final class TitleSubtitleCell: UITableViewCell {
         return datePicker
     }()
     
-    private lazy var doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(tappedDone))
+    // private lazy var
+    private let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: TitleSubtitleCell.self, action: #selector(tappedDone))
 
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()

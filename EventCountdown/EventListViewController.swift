@@ -3,11 +3,9 @@ import UIKit
 final class EventListViewController: UIViewController {
     var eventListViewModel: EventListViewModel!
     
-    lazy private var eventListTableView: UITableView = {
+    private let eventListTableView: UITableView = {
         let tableView = UITableView()
         tableView.registerCell(EventCell.self)
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -49,15 +47,48 @@ extension EventListViewController {
 //        eventListViewModel.tappedAddEvent()
         
         // New version
-        eventListViewModel.tappedAddNewEvent()
+        eventListViewModel.tappedAddEvent()
     }
     
     @objc private func tapSettingsButton() {
         eventListViewModel.tappedSettings()
     }
     
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+        
+//        print("Ye")
+//        print(eventListTableView.frame)
+//        print(eventListTableView.bounds)
+//        let a = eventListTableView.bounds
+        
+//        Ye
+//        (0.0, 0.0, 0.0, 0.0)
+//        (0.0, -91.0, 0.0, 0.0)
+//        Ye
+//        (0.0, 0.0, 428.0, 926.0)
+//        (0.0, -91.0, 428.0, 926.0)
+        
+//        Ye
+//        (0.0, 0.0, 428.0, 926.0)
+//        (0.0, 355.0, 428.0, 926.0)
+//        Ye
+//        (0.0, 0.0, 926.0, 428.0)
+//        (0.0, 308.0, 926.0, 428.0)
+
+//    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("eventListTableView Frame: ", eventListTableView.frame)
+        print("eventListTableView Bounds: ", eventListTableView.bounds)
+        print("view frame", view.frame)
+        print("view bounds", view.bounds)
+    }
+    
     private func configureTableView() {
         view.addSubview(eventListTableView)
+        eventListTableView.dataSource = self
+        eventListTableView.delegate = self
         NSLayoutConstraint.activate([
             eventListTableView.topAnchor.constraint(equalTo: view.topAnchor),
             eventListTableView.leftAnchor.constraint(equalTo: view.leftAnchor),

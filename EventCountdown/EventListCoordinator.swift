@@ -20,8 +20,8 @@ final class EventListCoordinator: CoordinatorProtocol & EventUpdatingCoordinator
         navigationController.setViewControllers([eventListViewController], animated: false)
     }
     
-    func startAddEvent() {
-        let addEventCoordinator = AddEventCoordinator(navigationController: navigationController)
+    func startOldAddEvent() {
+        let addEventCoordinator = OldAddEventCoordinator(navigationController: navigationController)
         addEventCoordinator.parentCoordinator = self
         childCoordinators.append(addEventCoordinator)
         addEventCoordinator.start()
@@ -41,11 +41,11 @@ final class EventListCoordinator: CoordinatorProtocol & EventUpdatingCoordinator
         settingsCoordinator.start()
     }
     
-    func startAddNewEvent() {
-        let newAddEventCoordinator = NewAddEventCoordinator(navigationController: navigationController)
-        newAddEventCoordinator.parentCoordinator = self
-        childCoordinators.append(newAddEventCoordinator)
-        newAddEventCoordinator.start()
+    func startAddEvent() {
+        let addEventCoordinator = AddEventTitleCoordinator(navigationController: navigationController)
+        addEventCoordinator.parentCoordinator = self
+        childCoordinators.append(addEventCoordinator)
+        addEventCoordinator.start()
     }
     
     func childDidFinish(_ childCoordinator: CoordinatorProtocol) {

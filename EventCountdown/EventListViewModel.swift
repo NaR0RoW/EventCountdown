@@ -17,16 +17,16 @@ final class EventListViewModel {
         self.eventManager = eventManager
     }
     
-    func tappedAddEvent() {
-        coordinator?.startAddEvent()
+    func tappedOldAddEvent() {
+        coordinator?.startOldAddEvent()
     }
     
     func tappedSettings() {
         coordinator?.startSettings()
     }
     
-    func tappedAddNewEvent() {
-        coordinator?.startAddNewEvent()
+    func tappedAddEvent() {
+        coordinator?.startAddEvent()
     }
     
     func numberOfRows() -> Int {

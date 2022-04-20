@@ -1,9 +1,9 @@
 import Foundation
 
-final class NewAddEventViewModel {
+final class AddEventTitleViewModel {
     let title = "Add event"
     
-    var coordinator: NewAddEventCoordinator?
+    var coordinator: AddEventTitleCoordinator?
     
     func tappedStartAddDate() {
         coordinator?.startAddDate()

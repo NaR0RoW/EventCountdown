@@ -1,9 +1,9 @@
 import Foundation
 
-final class NewAddDateViewModel {
+final class AddEventDateViewModel {
     let title = "Add date"
     
-    var coordinator: NewAddDateCoordinator?
+    var coordinator: AddEventDateCoordinator?
     
     func viewDidDisappear() {
         coordinator?.didFinish()

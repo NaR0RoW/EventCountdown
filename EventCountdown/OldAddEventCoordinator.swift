@@ -1,6 +1,6 @@
 import UIKit
 
-final class AddEventCoordinator: CoordinatorProtocol & EventUpdatingCoordinator {
+final class OldAddEventCoordinator: CoordinatorProtocol & EventUpdatingCoordinator {
     private(set) var childCoordinators: [CoordinatorProtocol] = []
     private let navigationController: UINavigationController
     private var modalNavigationController: UINavigationController?
@@ -15,9 +15,9 @@ final class AddEventCoordinator: CoordinatorProtocol & EventUpdatingCoordinator 
     
     func start() {
         self.modalNavigationController = UINavigationController()
-        let addEventViewController = AddEventViewController()
+        let addEventViewController = OldAddEventViewController()
         modalNavigationController?.setViewControllers([addEventViewController], animated: false)
-        let addEventViewModel = AddEventViewModel(cellBuilder: EventsCellBuilder())
+        let addEventViewModel = OldAddEventViewModel(cellBuilder: EventsCellBuilder())
         addEventViewModel.coordinator = self
         addEventViewController.addEventViewModel = addEventViewModel
         if let modalNavigationController = modalNavigationController {
